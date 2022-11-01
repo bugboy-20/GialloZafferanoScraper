@@ -58,6 +58,16 @@ def findDescription(soup):
         if hasattr(tag.p, 'text'):
             description = tag.p.text.translate(removeNumbers)
             allDescription.append(description)
+
+        images=[]
+        imgs = tag.find_all('img')
+        for img in imgs:
+            imgURL = 'https://www.giallozafferano.it' + img.get('data-src')
+            imageToBase64 = str(base64.b64encode(requests.get(imgURL).content))
+            imageToBase64 = imageToBase64[2:len(imageToBase64) - 1]
+            images.append(imageToBase64)
+
+        allDescription.append((images,description))
     return allDescription
 
 def findCategory(soup):
