@@ -73,7 +73,9 @@ def findDescription(soup):
 def findCategory(soup):
     for tag in soup.find_all(attrs={'class' : 'gz-breadcrumb'}):
         category = tag.li.a.string
-        return category
+        if category is not None:
+            return category
+    return ""
 
 def findImage(soup):
 
